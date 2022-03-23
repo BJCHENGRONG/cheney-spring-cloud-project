@@ -1,0 +1,37 @@
+server:
+  port: 10085
+  servlet:
+    context-path: /a1
+  max-http-header-size: 1048576
+  tomcat:
+    max-connections: 3000
+    max-http-post-size: 1048576
+    max-threads: 1000
+spring:
+  application:
+    name: cheney-provider-server
+    jackson:
+      time-zone: GMT+8
+      date-format: yyyy-MM-dd HH:mm:ss
+## ====================== Feign （只需要配置服务端即可，客户端不需要配置，除非客户端也是Feign服务端）
+#使用okhttp提高qps,通过okhttp有连接池和超时时间进行调优，禁用默认的http，启用okhttp
+feign:
+  httpclient:
+    enabled: true
+  okhttp:
+    enabled: false
+  # feign启用hystrix，才能熔断、降级
+  hystrix:
+    enabled: true
+## ====================== Eureka
+eureka:
+  instance:
+    prefer-ip-address: true
+    ## ---------- 针对上面设置了 context-path 路径进行配置 --------- BEGIN
+    home-page-url-path: ${server.servlet.context-path}
+    health-check-url-path: ${server.servlet.context-path}/actuator/health
+    status-page-url-path: ${server.servlet.context-path}/actuator/info
+    ## ---------- 针对上面设置了 context-path 路径进行配置 --------- END
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:10086/eureka/

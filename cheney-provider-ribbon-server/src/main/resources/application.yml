@@ -1,0 +1,41 @@
+server:
+  port: 10083
+  servlet:
+    context-path: /p1
+  max-http-header-size: 1048576
+  tomcat:
+    max-connections: 3000
+    max-http-post-size: 1048576
+    max-threads: 1000
+spring:
+  application:
+    # 注意：ribbon负载均衡测试，这里的名字要和做负载均衡的项目cheney-provider-server一样
+    # ribbon无需引用其他的pom依赖，ribbon已经整合在eureka服务包中，所以无需引用其他包
+    # 说明：ribbon负载均衡默认是开启的无需额外开启
+    name: cheney-provider-server
+    # jackson 日期格式
+    jackson:
+      time-zone: GMT+8
+      date-format: yyyy-MM-dd HH:mm:ss
+## ====================== Feign
+#使用okhttp提高qps，通过okhttp有连接池和超时时间进行调优，禁用默认的http，启用okhttp
+feign:
+  httpclient:
+    enabled: true
+  okhttp:
+    enabled: false
+  # feign启用hystrix，才能熔断、降级
+  hystrix:
+    enabled: true
+## ====================== Eureka
+eureka:
+  instance:
+    prefer-ip-address: true
+    ## ---------- 针对上面设置了 context-path 路径进行配置 --------- BEGIN
+    home-page-url-path: ${server.servlet.context-path}
+    health-check-url-path: ${server.servlet.context-path}/actuator/health
+    status-page-url-path: ${server.servlet.context-path}/actuator/info
+    ## ---------- 针对上面设置了 context-path 路径进行配置 --------- END
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:10086/eureka/

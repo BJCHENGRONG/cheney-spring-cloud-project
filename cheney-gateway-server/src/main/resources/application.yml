@@ -1,0 +1,13 @@
+spring:
+  #profiles:active: test
+  application:
+    name: cheney-gateway-server
+server:
+  port: 10082
+## ======================================= Eureka
+eureka:
+  instance:
+  #prefer-ip-address: true      #以IP地址注册到服务中心 可以显示服务的IP地址
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:10086/eureka/

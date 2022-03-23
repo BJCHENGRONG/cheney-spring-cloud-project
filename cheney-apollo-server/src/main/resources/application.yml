@@ -1,0 +1,34 @@
+server:
+  port: 10082
+  servlet:
+    context-path: /a1
+  max-http-header-size: 1048576
+  tomcat:
+    max-connections: 3000
+    max-http-post-size: 1048576
+    max-threads: 1000
+spring:
+  application:
+    name: cheney-apollo-server
+    jackson:
+      time-zone: GMT+8
+      date-format: yyyy-MM-dd HH:mm:ss
+## ====================== Eureka
+eureka:
+  instance:
+    prefer-ip-address: true
+    ## ---------- 针对上面设置了 context-path 路径进行配置 --------- BEGIN
+    home-page-url-path: ${server.servlet.context-path}
+    health-check-url-path: ${server.servlet.context-path}/actuator/health
+    status-page-url-path: ${server.servlet.context-path}/actuator/info
+    ## ---------- 针对上面设置了 context-path 路径进行配置 --------- END
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:10086/eureka/
+
+###################### APOLLO 说明 ##########################################################
+  #  1、Config Services提供配置的读取，推送等功能，服务对象是Apollo客户端（Config本身自带Eureka服务）
+  #2、Admin Services提供配置的修改，发布等功能，服务对象是Apollo Portal（管理界面）
+  #3、Eureka提供服务注册和发现，为了简单起见，目前Eureka在部署是和Config Service是在一个JVM进程中
+  #4、Config Service和Admin Service都是多实例，无状态部署，所以需要讲自己注册到Eureka中，在Eureka上架了一层Meta Server用于封装Eureka的服务发现接口
+####################### APOLLO 说明 #########################################################

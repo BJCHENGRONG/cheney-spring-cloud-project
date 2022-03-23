@@ -1,0 +1,29 @@
+error: true
+logging:
+  level:
+    com.netflix.eureka: 'off'
+    com.netflix.discovery: 'off'
+server:
+  port: 10086
+spring:
+  application:
+    name: cheney-eureka-server        # EUREKA服务端的实例名称
+  security:  # Eureka加密方式 pom->spring-boot-starter-security
+    user:
+      name: admin
+      password: admin
+eureka:
+  instance:
+    hostname: localhost
+    #prefer-ip-address: true           #以IP地址注册到服务中心，相互注册使用IP地址 可以显示服务的IP地址
+  server:
+    enable-self-preservation: false      #自我保护机制（正式机建议开启,开发机不开启）
+    eviction-interval-timer-in-ms: 5000 # 清理间隔（单位毫秒，默认是60*1000）启用主动失效，并且每次主动失效检测间隔为3s
+  client:
+    register-with-eureka: false       # 服务端本身不进行注册
+    fetch-registry: false             # 表示是否从Eureka Server获取注册的服务信息
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+
+

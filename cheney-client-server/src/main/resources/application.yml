@@ -1,0 +1,56 @@
+server:
+  port: 10084
+  servlet:
+    context-path: /c1
+  max-http-header-size: 1048576
+  tomcat:
+    max-connections: 3000
+    max-http-post-size: 1048576
+    max-threads: 1000
+spring:
+  application:
+    name: cheney-client-server
+    # jackson 日期格式
+    jackson:
+      time-zone: GMT+8
+      date-format: yyyy-MM-dd HH:mm:ss
+## ====================== Eureka
+eureka:
+  instance:
+  #prefer-ip-address: true      #以IP地址注册到服务中心,可以显示服务的IP地址
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:10086/eureka/
+## ====================== Feign
+#使用okhttp提高qps，通过okhttp有连接池和超时时间进行调优，禁用默认的http，启用okhttp
+feign:
+  httpclient:
+    enabled: true
+  okhttp:
+    enabled: false
+  # feign启用hystrix，才能熔断、降级
+  hystrix:
+    enabled: true
+## ====================== Hystrix
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000
+            #如果配置ribbon的重试，hystrix的超时时间要大于ribbon的超时时间，ribbon才会重试
+            #Hystrix的超时时间=(1 + MaxAutoRetries + MaxAutoRetriesNextServer) * ReadTimeout 比较好，具体看需求
+## ====================== Ribbon
+#下面的配置是针对客户端调用后端服务的 Ribbon 负载均衡策略的改变
+#需要调整哪个就以哪个微服务的项目名称开头进行设置如下：
+#下面的配置cheney-provider-server这个是微服务的id，也就是Eureka中注册的服务名称(多个项目ribbon配置的项目名称必须是一样的）
+cheney-provider-server:
+  ribbon:
+    MaxAutoRetries: 1                 #最大重试次数，当Eureka中可以找到服务，但是服务连不上时将会重试
+    MaxAutoRetriesNextServer: 1       #切换实例的重试次数
+    OkToRetryOnAllOperations: false   #对所有的操作请求都进行重试，如果是get则可以，如果是post,put等操作没有实现幂等的情况下是很危险的
+    ConnectTimeout: 10000             #请求连接的超时时间
+    ReadTimeout: 10000                #请求处理的超时时间
+    #RoundRobinRule方式轮询选择server（默认）
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
