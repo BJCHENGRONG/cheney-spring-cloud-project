@@ -1,7 +1,7 @@
 server:
   port: 10085
   servlet:
-    context-path: /a1
+    context-path: /p1
   max-http-header-size: 1048576
   tomcat:
     max-connections: 3000
@@ -9,7 +9,11 @@ server:
     max-threads: 1000
 spring:
   application:
+    # 注意：ribbon负载均衡测试，这里的名字要和做负载均衡的项目cheney-provider-server一样
+    # ribbon无需引用其他的pom依赖，ribbon已经整合在eureka服务包中，所以无需引用其他包
+    # 说明：ribbon负载均衡默认是开启的无需额外开启
     name: cheney-provider-server
+    # jackson 日期格式
     jackson:
       time-zone: GMT+8
       date-format: yyyy-MM-dd HH:mm:ss

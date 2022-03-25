@@ -2,6 +2,14 @@ spring:
   #profiles:active: test
   application:
     name: cheney-gateway-server
+    cloud:
+      gateway:
+        discovery:
+          locator:
+            #与服务注册中心集成
+            enabled: true
+            #因为eureka的serviceId默认是大写，设为true之后，在gateway中可以用小写的serviceId进行路由转发
+            lowerCaseServiceId: true
 server:
   port: 10082
 ## ======================================= Eureka

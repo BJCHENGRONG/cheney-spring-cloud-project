@@ -17,8 +17,8 @@ spring:
     jackson:
       time-zone: GMT+8
       date-format: yyyy-MM-dd HH:mm:ss
-## ====================== Feign
-#使用okhttp提高qps，通过okhttp有连接池和超时时间进行调优，禁用默认的http，启用okhttp
+## ====================== Feign （只需要配置服务端即可，客户端不需要配置，除非客户端也是Feign服务端）
+#使用okhttp提高qps,通过okhttp有连接池和超时时间进行调优，禁用默认的http，启用okhttp
 feign:
   httpclient:
     enabled: true

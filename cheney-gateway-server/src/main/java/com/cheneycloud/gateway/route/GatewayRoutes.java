@@ -9,6 +9,19 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.function.Function;
 
+/**
+ * @Bean
+ *        public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+ * 		return builder.routes()
+ * 				.route("path_route", r -> r.path("/about")
+ * 						.uri("http://ityouknow.com"))
+ * 				.build();
+ *    }
+ *   上面配置了一个 id 为 path_route 的路由，当访问地址http://localhost:8080/about时
+ *   会自动转发到地址：http://www.ityouknow.com/about和上面的转发效果一样，只是这里转发的是以项目地址/about格式的请求地址。
+ *   上面两个示例中 uri 都是指向了我的个人网站，在实际项目使用中可以将 uri 指向对外提供服务的项目地址，统一对外输出接口。
+ */
+
 @Configuration
 public class GatewayRoutes {
     @Bean
