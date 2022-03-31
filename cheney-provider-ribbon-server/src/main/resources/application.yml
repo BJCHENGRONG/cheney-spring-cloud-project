@@ -11,7 +11,8 @@ spring:
   application:
     # 注意：ribbon负载均衡测试，这里的名字要和做负载均衡的项目cheney-provider-server一样
     # ribbon无需引用其他的pom依赖，ribbon已经整合在eureka服务包中，所以无需引用其他包
-    # 说明：ribbon负载均衡默认是开启的无需额外开启
+    # 说明：ribbon负载均衡默认是开启的无需额外开启；
+    # 并且ribbon也是集成在Eureka中，无需额外导入jar包，但是客户端需要有一些配置
     name: cheney-provider-server
     # jackson 日期格式
     jackson:

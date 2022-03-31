@@ -10,10 +10,21 @@ server:
 spring:
   application:
     name: cheney-client-server
-    # jackson 日期格式
     jackson:
       time-zone: GMT+8
       date-format: yyyy-MM-dd HH:mm:ss
+  ##客户端配置微服务分布式链路追踪
+  sleuth:
+    web:
+      client:
+        ## spring.sleuth.web.client.enabled：设置开启请求跟踪
+        enabled: true
+    sampler:
+      ## spring.sleuth.sampler.probability：设置采样比例，默认是1.0
+      probability: 1.0
+  zipkin:
+    ## Zipkin Server服务器地址
+    base-url: http://localhost:10081/
 ## ====================== Eureka
 eureka:
   instance:

@@ -106,4 +106,14 @@ public class ClientFeignTestController {
         return resultMsg;
     }
 
+    /**
+     * 这里是一个GET的方式测试链接
+     * @param loginName
+     * @return
+     */
+    @RequestMapping(value = "/feignLogin05", method = RequestMethod.GET)
+    public String getSupplierCapacities05(@RequestParam(value = "loginName", required = false) String loginName, @RequestParam(value = "loginPwd", required = false) String loginPwd) {
+        return "您好(没有通过Feign插件)：" + loginName + ";  密码是：" + loginPwd + "  当前时间是：" + System.currentTimeMillis();
+    }
+
 }

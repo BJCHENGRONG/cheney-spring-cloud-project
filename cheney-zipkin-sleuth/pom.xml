@@ -9,17 +9,18 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <!-- 定义自己的groupID和artifactId版本-->
-    <groupId>com.cheneyclient</groupId>
-    <artifactId>cheney-client-server</artifactId>
+    <groupId>com.zipkin</groupId>
+    <artifactId>cheney-zipkin-sleuth</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>cheney-client-server</name>
-    <description>Demo project for Spring Cloud Client</description>
-
+    <name>cheney-zipkin-sleuth</name>
+    <description>Demo project for Spring Boot</description>
+    <!-- Version Control -->
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <!-- 依赖 -->
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -35,30 +36,33 @@
             <artifactId>cheney-common-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <!-- Feign:consul 服务调用 -->
+        <!-- Zipkin 服务端 -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <!-- Hystrix 服务调用 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-        </dependency>
-        <!-- Zipkin-Sleuth Client -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-sleuth</artifactId>
+            <groupId>io.zipkin.java</groupId>
+            <artifactId>zipkin-autoconfigure-ui</artifactId>
+            <version>2.9.4</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-sleuth</artifactId>
+            <groupId>io.zipkin.java</groupId>
+            <artifactId>zipkin-server</artifactId>
+            <version>2.9.4</version>
+            <!-- 解决Zipkin服务端的日志引用冲突问题,此处用于排除log4j版本 -->
+            <exclusions>
+                <exclusion>
+                    <artifactId>log4j-slf4j-impl</artifactId>
+                    <groupId>org.apache.logging.log4j</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-sleuth-zipkin</artifactId>
-        </dependency>
-
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

@@ -1,0 +1,19 @@
+server:
+  port: 10081
+  max-http-header-size: 1048576
+spring:
+  application:
+    name: cheney-zipkin-sleuth
+## zipkin启动报错无法访问的解决方法
+management:
+  metrics:
+    web:
+      server:
+        auto-time-requests: false
+## ====================== Eureka
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:10086/eureka/

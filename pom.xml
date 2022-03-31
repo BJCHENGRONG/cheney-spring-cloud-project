@@ -17,6 +17,7 @@
         <module>cheney-common-core</module>
         <module>cheney-provider-ribbon-server</module>
         <module>cheney-gateway-server</module>
+        <module>cheney-zipkin-sleuth</module>
     </modules>
 
     <properties>

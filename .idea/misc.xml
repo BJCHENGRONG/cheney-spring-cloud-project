@@ -14,6 +14,7 @@
         <option value="$PROJECT_DIR$/cheney-provider-ribbon-server/pom.xml" />
         <option value="$PROJECT_DIR$/cheney-gateway-zuul/pom.xml" />
         <option value="$PROJECT_DIR$/cheney-apollo-server/pom.xml" />
+        <option value="$PROJECT_DIR$/cheney-zipkin-sleuth/pom.xml" />
       </list>
     </option>
   </component>
