@@ -25,7 +25,16 @@ spring:
   zipkin:
     ## Zipkin Server服务器地址
     base-url: http://localhost:10081/
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/mybatis_plus?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
 ## ====================== Eureka
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 eureka:
   instance:
   #prefer-ip-address: true      #以IP地址注册到服务中心,可以显示服务的IP地址
