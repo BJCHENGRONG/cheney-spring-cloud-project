@@ -3,6 +3,7 @@ package com.cheneyclient.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cheneyclient.entity.Teacher;
 import com.cheneyclient.service.TeacherService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Random;
 
+@Api(tags="Teacher->Controller模块")
 @RestController
 @RequestMapping("/teacher")
 class TeacherController {

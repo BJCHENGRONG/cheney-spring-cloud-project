@@ -9,11 +9,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="cheney-zipkin-sleuth" />
         <module name="cheney-client-server" />
-        <module name="cheney-common-core" />
+        <module name="cheney-gateway-server" />
         <module name="cheney-provider-ribbon-server" />
         <module name="cheney-provider-server" />
         <module name="cheney-eureka-server" />
-        <module name="cheney-gateway-server" />
+        <module name="cheney-common-core" />
         <module name="cheney-apollo-server" />
       </profile>
     </annotationProcessing>

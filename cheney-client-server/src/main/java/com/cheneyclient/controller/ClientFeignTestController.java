@@ -2,13 +2,18 @@ package com.cheneyclient.controller;
 
 import com.cheneyclient.service.ClientFeignClientService;
 import com.cheneycore.model.User;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Map;
 
+/**
+ * Knife4j请求地址：
+ */
+@Api(tags="客户端Feign组件")
 @RestController
 @RequestMapping("/client")
 public class ClientFeignTestController {
@@ -22,6 +27,7 @@ public class ClientFeignTestController {
      * @param loginName
      * @return
      */
+    @ApiOperation(value="Get测试方式-01")
     @RequestMapping(value = "/feignLogin01", method = RequestMethod.GET)
     public String getSupplierCapacities01(@RequestParam(value = "loginName", required = false) String loginName) {
         return "收到组件成功返回-》" + feignClientService.getSupplierCapacities01(loginName);
@@ -35,29 +41,10 @@ public class ClientFeignTestController {
      * @param loginName
      * @return
      */
+    @ApiOperation(value="Get测试方式-02")
     @RequestMapping(value = "/feignLogin02", method = RequestMethod.GET)
     public String getSupplierCapacities02(@RequestParam(value = "loginName", required = false) String loginName, @RequestParam(value = "loginPwd", required = false) String loginPwd) {
         return "收到组件成功返回-》" + feignClientService.getSupplierCapacities02(loginName, loginPwd);
-    }
-
-    /**
-     * 实体参数测试
-     * http://localhost:10084/c1/client/feignLogin03
-     * POSTMAN:新增： Headers->Content-Type=application/json
-     * BODY->Raw
-     * {
-     * "loginName":"loginName",
-     * "loginPwd":"loginPwd",
-     * "loginTime":"loginTime"
-     * }
-     * POST
-     *
-     * @param user
-     * @return
-     */
-    @RequestMapping(value = "/feignLogin03", method = RequestMethod.POST)
-    public String getSupplierCapacities03(@RequestBody User user) {
-        return "收到组件成功返回-》" + feignClientService.getSupplierCapacities03(user);
     }
 
     /**
@@ -81,6 +68,7 @@ public class ClientFeignTestController {
      * ribbon:
      * NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #随机策略
      */
+    @ApiOperation(value="Ribbon测试")
     @PostMapping(value = "/feignLogin04")
     public String getSupplierCapacities04(@RequestBody Map<String, Object> paramMap) {
         String resultMsg = "";
@@ -107,11 +95,33 @@ public class ClientFeignTestController {
     }
 
     /**
+     * 实体参数测试
+     * http://localhost:10084/c1/client/feignLogin03
+     * POSTMAN:新增： Headers->Content-Type=application/json
+     * BODY->Raw
+     * {
+     * "loginName":"loginName",
+     * "loginPwd":"loginPwd",
+     * "loginTime":"loginTime"
+     * }
+     * POST
+     *
+     * @param user
+     * @return
+     */
+    @ApiOperation(value="Get测试方式-03")
+    @RequestMapping(value = "/feignLogin03", method = RequestMethod.POST)
+    public String getSupplierCapacities03(@RequestBody User user) {
+        return "收到组件成功返回-》" + feignClientService.getSupplierCapacities03(user);
+    }
+
+    /**
      * 这里是一个GET的方式测试链接
      * @param loginName
      * @return
      */
     @RequestMapping(value = "/feignLogin05", method = RequestMethod.GET)
+    @ApiOperation(value="Get测试方式-05")
     public String getSupplierCapacities05(@RequestParam(value = "loginName", required = false) String loginName, @RequestParam(value = "loginPwd", required = false) String loginPwd) {
         return "您好(没有通过Feign插件)：" + loginName + ";  密码是：" + loginPwd + "  当前时间是：" + System.currentTimeMillis();
     }

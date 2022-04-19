@@ -3,6 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <dependencies>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.0.1-jre</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
     <!-- 这里是一个公共的项目模块，通用代码放到此模块进行管理 -->
 
     <!-- 引入父工程的POM依赖 -->

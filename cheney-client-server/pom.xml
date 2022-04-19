@@ -52,10 +52,6 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-sleuth</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-sleuth-zipkin</artifactId>
         </dependency>
         <!-- Mybatis-Plus -->
@@ -84,7 +80,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>1.2.6</version>
+            <version>1.1.24</version>
         </dependency>
 
         <!-- 引入log4j -->
@@ -92,12 +88,6 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
-        </dependency>
-        <!-- Druid -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.2.0</version>
         </dependency>
         <!-- flywaydb -->
         <dependency>
@@ -109,8 +99,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
-
-
     </dependencies>
 
 </project>
