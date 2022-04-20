@@ -1,19 +1,21 @@
 package com.cheneyclient.controller;
 
 import com.cheneyclient.service.ClientFeignClientService;
+import com.cheneycore.model.ResultVO;
 import com.cheneycore.model.User;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import io.swagger.annotations.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.Map;
 
 /**
  * Knife4j请求地址：
  */
-@Api(tags="客户端Feign组件")
+@Api(tags = "客户端Feign组件")
 @RestController
 @RequestMapping("/client")
 public class ClientFeignTestController {
@@ -27,25 +29,43 @@ public class ClientFeignTestController {
      * @param loginName
      * @return
      */
-    @ApiOperation(value="Get测试方式-01")
+    @ApiOperation(value = "feignLogin01", notes = "Get测试方式-01", httpMethod = "GET", response = String.class)
+    @ApiOperationSupport(order = 1, author = "cheney_chen@hgplan.cn")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "loginName", value = "用户名", dataType = "string", paramType = "query", example = "Cheney")
+    })
     @RequestMapping(value = "/feignLogin01", method = RequestMethod.GET)
     public String getSupplierCapacities01(@RequestParam(value = "loginName", required = false) String loginName) {
         return "收到组件成功返回-》" + feignClientService.getSupplierCapacities01(loginName);
     }
 
-
     /**
      * 这里是一个GET的方式测试链接
      * 测试地址链接：http://localhost:10084/c1/client/feignLogin02?loginName=chengrong&loginPwd=123456
+     * 下面的配置：method = {RequestMethod.GET,RequestMethod.POST} //既支持GET也支出POST
      *
      * @param loginName
      * @return
      */
-    @ApiOperation(value="Get测试方式-02")
-    @RequestMapping(value = "/feignLogin02", method = RequestMethod.GET)
+    @ApiOperation(value = "feignLogin02", notes = "Get测试方式-02", httpMethod = "GET", response = String.class)
+    @ApiOperationSupport(order = 1, author = "cheney_chen@hgplan.cn")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "loginName", value = "用户名", dataType = "string", paramType = "query", example = "Cheney"),
+            @ApiImplicitParam(name = "loginPwd", value = "密码", dataType = "string", paramType = "query")
+    })
+    @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "提示/指定的异常/已知错误"),
+            @ApiResponse(code = 200, message = "SUCCESS/接口返回成功状态"),
+            @ApiResponse(code = 403, message = "Forbidden"),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "UNKNOW ERROR/接口返回未知错误,请联系技术支持人员！"),
+    })
+    //既支持GET也支出POST
+    @RequestMapping(value = "/feignLogin02", method = {RequestMethod.GET, RequestMethod.POST}, headers = {"Accept=application/json"})
     public String getSupplierCapacities02(@RequestParam(value = "loginName", required = false) String loginName, @RequestParam(value = "loginPwd", required = false) String loginPwd) {
         return "收到组件成功返回-》" + feignClientService.getSupplierCapacities02(loginName, loginPwd);
     }
+
 
     /**
      * 测试四（Ribbon 客户端负载均衡）
@@ -68,9 +88,15 @@ public class ClientFeignTestController {
      * ribbon:
      * NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #随机策略
      */
-    @ApiOperation(value="Ribbon测试")
+    @ApiOperation(value = "feignLogin04", notes = "Ribbon负载均衡策略测试", httpMethod = "POST", response = String.class)
+    @ApiOperationSupport(order = 1, author = "cheney_chen@hgplan.cn")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "loginName", value = "用户名", dataType = "string", paramType = "query", example = "Cheney"),
+            @ApiImplicitParam(name = "loginPwd", value = "密码", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "reqCount", value = "循环次数", dataType = "string", paramType = "query", example = "100")
+    })
     @PostMapping(value = "/feignLogin04")
-    public String getSupplierCapacities04(@RequestBody Map<String, Object> paramMap) {
+    public ResultVO<Map<String, Object>> getSupplierCapacities04(@RequestBody Map<String, Object> paramMap) {
         String resultMsg = "";
         if (!CollectionUtils.isEmpty(paramMap)) {
             String loginName = paramMap.get("loginName").toString();
@@ -91,7 +117,7 @@ public class ClientFeignTestController {
         if (StringUtils.isBlank(resultMsg)) {
             resultMsg = "Ribbon-负载均衡已经调用完成";
         }
-        return resultMsg;
+        return new ResultVO(200, resultMsg);
     }
 
     /**
@@ -109,7 +135,7 @@ public class ClientFeignTestController {
      * @param user
      * @return
      */
-    @ApiOperation(value="Get测试方式-03")
+    @ApiOperation(value = "Get测试方式-03")
     @RequestMapping(value = "/feignLogin03", method = RequestMethod.POST)
     public String getSupplierCapacities03(@RequestBody User user) {
         return "收到组件成功返回-》" + feignClientService.getSupplierCapacities03(user);
@@ -117,11 +143,12 @@ public class ClientFeignTestController {
 
     /**
      * 这里是一个GET的方式测试链接
+     *
      * @param loginName
      * @return
      */
     @RequestMapping(value = "/feignLogin05", method = RequestMethod.GET)
-    @ApiOperation(value="Get测试方式-05")
+    @ApiOperation(value = "Get测试方式-05")
     public String getSupplierCapacities05(@RequestParam(value = "loginName", required = false) String loginName, @RequestParam(value = "loginPwd", required = false) String loginPwd) {
         return "您好(没有通过Feign插件)：" + loginName + ";  密码是：" + loginPwd + "  当前时间是：" + System.currentTimeMillis();
     }

@@ -105,3 +105,20 @@ cheney-provider-server:
     ReadTimeout: 10000                #请求处理的超时时间
     #RoundRobinRule方式轮询选择server（默认）
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+## ====================== knife4j
+knife4j:
+  enable: true
+  ## 是否是正式环境，正式环境是不允许访问，默认是false
+  production: false
+  ##是否启用加密
+  basic:
+    enable: false
+    username: admin
+    password: admin
+  setting:
+    ## 禁用默认的Footer显示
+    enableFooter: true
+    ## 启用自定义Footer
+    enableFooterCustom: true
+    ## 自定义内容
+    footerCustomContent: Apache License 2.0 | Copyright  2019-[浙江八一菜刀研究基地](https://gitee.com/xiaoym/knife4j)

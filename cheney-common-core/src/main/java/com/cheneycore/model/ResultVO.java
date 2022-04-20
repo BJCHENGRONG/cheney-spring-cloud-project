@@ -4,41 +4,35 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-@ApiModel(value = "ResultVO-> VO", description = "通用对象返回")
+@ApiModel(value = "ResultVO-> VO", description = "通用响应参数构造")
 @Data
 public class ResultVO<T> {
 
     @ApiModelProperty(required = true, notes = "返回数据")
     private T content;
 
-    @ApiModelProperty(required = true, notes = "返回成功与否", example = "true")
-    private boolean succeed = true;
-
-    @ApiModelProperty(required = true, notes = "结果码", example = "200")
-    private int code = 0;
+    @ApiModelProperty(required = true, notes = "结果码(0-提示/指定的异常/已知错误,200-OK,201-Created,401-Unauthorized,403-Forbidden,404-Not Found)", example = "200")
+    private int code = 200;
 
     @ApiModelProperty(required = true, notes = "返回信息说明", example = "SUCCESS")
-    private String msg;
+    private String message;
 
     public ResultVO(T content) {
         this.content = content;
     }
 
-    public ResultVO(boolean succeed, int code, String msg, T content) {
-        this.succeed = succeed;
+    public ResultVO(int code, String message, T content) {
         this.code = code;
-        this.msg = msg;
+        this.message = message;
         this.content = content;
     }
 
-    public ResultVO(boolean succeed, int code, String msg) {
-        this.succeed = succeed;
+    public ResultVO(int code, String msg) {
         this.code = code;
-        this.msg = msg;
+        this.message = msg;
     }
 
     public ResultVO() {
-
     }
 
     public static <T> ResultVO<T> success(T content) {
@@ -49,17 +43,14 @@ public class ResultVO<T> {
         return new ResultVO();
     }
 
-    public static ResultVO fail(int code, String msg) {
-        return new ResultVO(false, code, msg);
+    public static ResultVO exception(String message) {
+        return new ResultVO(0, message);
     }
 
-    public static ResultVO fail(String msg) {
-        return new ResultVO(false, -1, msg);
+    public static ResultVO fail(int code, String message) {
+        return new ResultVO(code, message);
     }
 
-    public static ResultVO fail() {
-        return fail("fail");
-    }
 }
 
 
